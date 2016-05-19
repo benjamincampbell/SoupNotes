@@ -18,24 +18,24 @@ public class NotepadActivity extends AppCompatActivity {
 
     private ArrayList<String> notes;
     private ArrayAdapter<String> notesAdapter;
-    private ListView lvNotes;
+    private ListView elvNotes;
+    private int noteNumber = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_notepad);
         //   ^ actually displays the /res/layout/activity_notepad.xml
-        lvNotes = (ListView) findViewById(R.id.lvNotes);
+        elvNotes = (ListView) findViewById(R.id.elvNotes);
         readNotes();
-        notes = new ArrayList<>();
         notesAdapter = new ArrayAdapter<>(this,
                 android.R.layout.simple_list_item_1, notes);
-        lvNotes.setAdapter(notesAdapter);
+        elvNotes.setAdapter(notesAdapter);
         setupListViewListener();
     }
 
     private void setupListViewListener() {
-        lvNotes.setOnItemLongClickListener(
+        elvNotes.setOnItemLongClickListener(
             new AdapterView.OnItemLongClickListener() {
                 @Override
                 public boolean onItemLongClick(AdapterView<?> adapter,
@@ -43,7 +43,10 @@ public class NotepadActivity extends AppCompatActivity {
                     //This is where the code to actually remove the item goes
                     notes.remove(pos);
                     notesAdapter.notifyDataSetChanged();
+
                     writeNotes();
+
+
                     return true;
                 }
             }
@@ -61,26 +64,26 @@ public class NotepadActivity extends AppCompatActivity {
         if (requestCode == 1 && resultCode == RESULT_OK && data != null){
             String newNote = data.getStringExtra("com.notlikethesoup.soupnotes.MESSAGE");
             notes.add(newNote);
-            writeNotes();
             notesAdapter.notifyDataSetChanged();
+            writeNotes();
+
         }
     }
-
     private void readNotes() {
         File filesDir = getFilesDir();
-        File notesFile = new File(filesDir, "notes.txt");
+        File todoFile = new File(filesDir, "todo.txt");
         try {
-            notes = new ArrayList<String>(FileUtils.readLines(notesFile));
+             notes= new ArrayList<String>(FileUtils.readLines(todoFile));
         } catch (IOException e) {
-            notes = new ArrayList<>();
+             notes = new ArrayList<String>();
         }
     }
 
     private void writeNotes() {
         File filesDir = getFilesDir();
-        File notesFile = new File(filesDir, "notes.txt");
+        File todoFile = new File(filesDir, "todo.txt");
         try {
-            FileUtils.writeLines(notesFile, notes);
+            FileUtils.writeLines(todoFile, notes);
         } catch (IOException e) {
             e.printStackTrace();
         }

@@ -10,10 +10,10 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.notlikethesoup.soupnotes.NotepadActivity">
 
-    <ListView
-        android:id="@+id/lvNotes"
+    <ExpandableListView
+        android:id="@+id/elvNotes"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"></ListView>
+        android:layout_height="wrap_content"></ExpandableListView>
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/new_note_fab"
