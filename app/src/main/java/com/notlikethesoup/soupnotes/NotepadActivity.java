@@ -3,6 +3,8 @@ package com.notlikethesoup.soupnotes;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -18,24 +20,29 @@ public class NotepadActivity extends AppCompatActivity {
 
     private ArrayList<String> notes;
     private ArrayAdapter<String> notesAdapter;
-    private ListView elvNotes;
-    private int noteNumber = 0;
+    private ListView lvNotes;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_notepad);
-        //   ^ actually displays the /res/layout/activity_notepad.xml
-        elvNotes = (ListView) findViewById(R.id.elvNotes);
+        lvNotes = (ListView) findViewById(R.id.lvNotes);
         readNotes();
         notesAdapter = new ArrayAdapter<>(this,
                 android.R.layout.simple_list_item_1, notes);
-        elvNotes.setAdapter(notesAdapter);
+        lvNotes.setAdapter(notesAdapter);
         setupListViewListener();
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu){
+        getMenuInflater().inflate(R.menu.addnote, menu);
+
+        return true;
+    }
+
     private void setupListViewListener() {
-        elvNotes.setOnItemLongClickListener(
+        lvNotes.setOnItemLongClickListener(
             new AdapterView.OnItemLongClickListener() {
                 @Override
                 public boolean onItemLongClick(AdapterView<?> adapter,
@@ -53,7 +60,7 @@ public class NotepadActivity extends AppCompatActivity {
         );
     }
 
-    public void onAddNote(View view){
+    public void onAddNote(MenuItem mi){
         Intent intent = new Intent(this, AddNoteActivity.class);
 
         startActivityForResult(intent, 1);

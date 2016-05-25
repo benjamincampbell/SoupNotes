@@ -3,11 +3,10 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
-        android:id="@+id/action_add_note"
+        android:id="@+id/action_confirm_note"
         app:showAsAction="ifRoom"
-        android:title="Add Note"
-        android:icon="@drawable/ic_add"
-        android:onClick="onAddNote"
+        android:title="Confirm Note"
+        android:icon="@drawable/ic_confirm_note"
+        android:onClick="onConfirmNote"
         />
-
 </menu>
