@@ -26,11 +26,21 @@ public class NotepadActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_notepad);
+
+        // Get the ListView that contains the notes
         lvNotes = (ListView) findViewById(R.id.lvNotes);
+
+        // Call the method to read the notes from file into the notes ArrayList
         readNotes();
+
+        // Set up an ArrayAdapter that we fill with the notes ArrayList
         notesAdapter = new ArrayAdapter<>(this,
                 android.R.layout.simple_list_item_1, notes);
+
+        // Set the notesAdapter to be the adapter for the lvNotes view
         lvNotes.setAdapter(notesAdapter);
+
+        // Self explanatory
         setupListViewListener();
     }
 
@@ -41,6 +51,7 @@ public class NotepadActivity extends AppCompatActivity {
         return true;
     }
 
+    // Sets what happens when someone long-clicks an item in the lvNotes ListView
     private void setupListViewListener() {
         lvNotes.setOnItemLongClickListener(
             new AdapterView.OnItemLongClickListener() {
@@ -50,9 +61,7 @@ public class NotepadActivity extends AppCompatActivity {
                     //This is where the code to actually remove the item goes
                     notes.remove(pos);
                     notesAdapter.notifyDataSetChanged();
-
                     writeNotes();
-
 
                     return true;
                 }
@@ -60,9 +69,11 @@ public class NotepadActivity extends AppCompatActivity {
         );
     }
 
+    // Method called when someone clicks the AddNote button (as set in @menu/addnote.xml)
     public void onAddNote(MenuItem mi){
+        // create an intent, passing this button and the activity to be started in the intent.
+        // We set 1
         Intent intent = new Intent(this, AddNoteActivity.class);
-
         startActivityForResult(intent, 1);
     }
 
@@ -80,7 +91,7 @@ public class NotepadActivity extends AppCompatActivity {
         File filesDir = getFilesDir();
         File todoFile = new File(filesDir, "todo.txt");
         try {
-             notes= new ArrayList<String>(FileUtils.readLines(todoFile));
+             notes = new ArrayList<String>(FileUtils.readLines(todoFile));
         } catch (IOException e) {
              notes = new ArrayList<String>();
         }
